@@ -1,16 +1,4 @@
 services:
-  postgres:
-    image: postgres:18.3-bookworm
-    container_name: postgres_db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: docker_demo_db
-    volumes:
-      - pgdata:/var/lib/postgresql
-    ports:
-      - "5432:5432"
-  
   backend:
     build: ./backend
     container_name: demo_backend
@@ -25,6 +13,18 @@ services:
     container_name: demo_frontend
     depends_on:
       - backend
+  
+  postgres:
+    image: postgres:18.3-bookworm
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: docker_demo_db
+    volumes:
+      - pgdata:/var/lib/postgresql
+    ports:
+      - "5432:5432"
   
   nginx:
     build: ./nginx
