@@ -5,14 +5,20 @@ using DockerDemoBackendApi.Services;
 
 namespace DockerDemoBackendApi;
 
+/// <summary>
+/// The main entry point for the application.
+/// </summary>
 public class Program
 {
+    /// <summary>
+    /// The main method that serves as the entry point for the application.
+    /// </summary>
+    /// <param name="args">The command-line arguments passed to the application.</param>
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
             options.UseNpgsql(
