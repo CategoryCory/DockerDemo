@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { getMessages, addMessage, deleteMessage } from './api/api';
 import type { Message } from './types/message';
 
+/**
+ * The main application component that renders the message management interface.
+ * @returns The JSX element representing the application UI.
+ */
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
@@ -11,6 +15,7 @@ function App() {
     loadMessages();
   }, []);
 
+  /** Loads messages from the backend API. */
   async function loadMessages() {
     try {
       const data = await getMessages();
@@ -20,6 +25,7 @@ function App() {
     }
   }
 
+  /** Handles adding a new message. */
   async function handleAddMessage() {
     if (!newMessage.trim()) return;
 
@@ -28,6 +34,7 @@ function App() {
     setNewMessage('');
   }
 
+  /** Handles deleting a message by its ID. */
   async function handleDeleteMessage(id: number) {
     await deleteMessage(id);
     setMessages(prev => prev.filter(m => m.id !== id));
@@ -58,67 +65,48 @@ function App() {
           </button>
         </div>
 
-        {/* Message List */}
-        {/* <div className="bg-white rounded shadow"> */}
-          {loading && (
-            <div className="p-4 text-gray-500">Loading messages...</div>
-          )}
+        {loading && (
+          <div className="p-4 text-gray-500">Loading messages...</div>
+        )}
 
-          {!loading && messages.length === 0 && (
-            <div className="p-4 text-gray-500">No messages yet.</div>
-          )}
+        {!loading && messages.length === 0 && (
+          <div className="p-4 text-gray-500">No messages yet.</div>
+        )}
 
-          {!loading && messages.length > 0 && (
-            <div className="mt-8 flow-root">
-              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                  <table className="relative min-w-full divide-y divide-gray-300">
-                    <thead>
-                      <tr>
-                        <th scope="col" className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0">Message</th>
-                        <th scope="col" className="py-3.5 pr-4 pl-3 sm:pr-0">
-                          <span className="sr-only">Delete</span>
-                        </th>
+        {!loading && messages.length > 0 && (
+          <div className="mt-8 flow-root">
+            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <table className="relative min-w-full divide-y divide-gray-300">
+                  <thead>
+                    <tr>
+                      <th scope="col" className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0">Message</th>
+                      <th scope="col" className="py-3.5 pr-4 pl-3 sm:pr-0">
+                        <span className="sr-only">Delete</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {messages.map(message => (
+                      <tr key={message.id}>
+                        <td className="whitespace-nowrap py-4 pr-3 pl-4 text-sm font-medium text-gray-900 sm:pl-0">{message.text}</td>
+                        <td className="whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-0">
+                          <button
+                            onClick={() => handleDeleteMessage(message.id)}
+                            className="text-red-600 hover:text-red-800 cursor-pointer"
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {messages.map(message => (
-                        <tr key={message.id}>
-                          <td className="whitespace-nowrap py-4 pr-3 pl-4 text-sm font-medium text-gray-900 sm:pl-0">{message.text}</td>
-                          <td className="whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-0">
-                            <button
-                              onClick={() => handleDeleteMessage(message.id)}
-                              className="text-red-600 hover:text-red-800 cursor-pointer"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* <ul>
-            {messages.map(message => (
-              <li
-                key={message.id}
-                className="flex items-center justify-between px-4 py-2 border-b last:border-b-0"
-              >
-                <span>{message.text}</span>
-                <button
-                  onClick={() => handleDeleteMessage(message.id)}
-                  className="text-red-600 hover:text-red-800"
-                >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul> */}
-        {/* </div> */}
       </div>
     </div>
   );
