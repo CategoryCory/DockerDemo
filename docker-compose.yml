@@ -1,6 +1,6 @@
 services:
   backend:
-    build: ./backend
+    build: ./backend/DockerDemoBackendApi
     container_name: demo_backend
     environment:
       ASPNETCORE_URLS: http://+:5000
