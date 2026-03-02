@@ -40,7 +40,7 @@ public class MessageController : ControllerBase
     /// <returns>A list of messages.</returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Message>))]
-    public async Task<IActionResult> GetMessage(CancellationToken ct = default)
+    public async Task<IActionResult> GetMessage(CancellationToken ct)
     {
         var messages = await _messageService.GetMessagesAsync(ct);
         return Ok(messages);
@@ -56,7 +56,7 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Message))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> AddMessage([FromBody] AddMessageRequest addMessageRequest, CancellationToken ct = default)
+    public async Task<IActionResult> AddMessage([FromBody] AddMessageRequest addMessageRequest, CancellationToken ct)
     {
         try
         {
@@ -85,7 +85,7 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> DeleteMessage(int id, CancellationToken ct = default)
+    public async Task<IActionResult> DeleteMessage(int id, CancellationToken ct)
     {
         try
         {

@@ -13,7 +13,7 @@ public interface IMessageService
     /// <param name="text">The text of the message to be added.</param>
     /// <param name="ct">The cancellation token.</param>
     /// <returns>The newly created message.</returns>
-    Task<Message> AddMessageAsync(string text, CancellationToken ct = default);
+    Task<Message> AddMessageAsync(string text, CancellationToken ct);
 
     /// <summary>
     /// Deletes a message with the specified identifier. Returns true if the message was successfully
@@ -22,7 +22,7 @@ public interface IMessageService
     /// <param name="id">The identifier of the message to be deleted.</param>
     /// <param name="ct">The cancellation token.</param>
     /// <returns>True if the message was successfully deleted, otherwise false.</returns>
-    Task<bool> DeleteMessageAsync(int id, CancellationToken ct = default);
+    Task<bool> DeleteMessageAsync(int id, CancellationToken ct);
 
     /// <summary>
     /// Retrieves all messages from the system. This method returns an enumerable collection of messages,
@@ -30,5 +30,5 @@ public interface IMessageService
     /// </summary>
     /// <param name="ct">The cancellation token.</param>
     /// <returns>An enumerable collection of messages.</returns>
-    Task<IEnumerable<Message>> GetMessagesAsync(CancellationToken ct = default);
+    Task<IEnumerable<Message>> GetMessagesAsync(CancellationToken ct);
 }

@@ -36,7 +36,7 @@ public class MessageService : IMessageService
     /// </summary>
     /// <param name="ct">The cancellation token.</param>
     /// <returns>An enumerable collection of messages.</returns>
-    public async Task<IEnumerable<Message>> GetMessagesAsync(CancellationToken ct = default)
+    public async Task<IEnumerable<Message>> GetMessagesAsync(CancellationToken ct)
     {
         return await _dbContext.Messages
             .AsNoTracking()
@@ -54,7 +54,7 @@ public class MessageService : IMessageService
     /// <returns>The newly created message.</returns>
     /// <exception cref="ArgumentException">Thrown when the text is null, empty, or whitespace.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the message cannot be saved to the database.</exception>
-    public async Task<Message> AddMessageAsync(string text, CancellationToken ct = default)
+    public async Task<Message> AddMessageAsync(string text, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
@@ -90,7 +90,7 @@ public class MessageService : IMessageService
     /// <exception cref="InvalidOperationException">
     /// Thrown when an error occurs while deleting the message from the database.
     /// </exception>
-    public async Task<bool> DeleteMessageAsync(int id, CancellationToken ct = default)
+    public async Task<bool> DeleteMessageAsync(int id, CancellationToken ct)
     {
         var message = await _dbContext.Messages.FirstOrDefaultAsync(m => m.Id == id, ct);
 
